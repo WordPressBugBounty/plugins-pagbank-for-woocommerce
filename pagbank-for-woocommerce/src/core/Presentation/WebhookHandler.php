@@ -89,27 +89,13 @@ class WebhookHandler {
 	 */
 	public function handle() {
 		try {
-			$input   = file_get_contents( 'php://input' );
-			$headers = getallheaders();
-
-			$content_type = $headers['Content-Type'];
-
-			if ( $content_type !== 'application/json' ) {
-				return wp_send_json_error(
-					array(
-						'message' => 'Content type inválido.',
-					),
-					400
-				);
-			}
-
-			$this->log( 'Webhook received: ' . $input );
-
-			$payload = json_decode( $input, true );
-
+			$input     = file_get_contents( 'php://input' );
+			$payload   = json_decode( $input, true );
 			$reference = isset( $payload['reference_id'] ) ? json_decode( $payload['reference_id'], true ) : null;
 			$order_id  = isset( $reference['id'] ) ? $reference['id'] : null;
 			$signature = isset( $reference['password'] ) ? $reference['password'] : null;
+
+			$this->log( 'Webhook received: ' . $input );
 
 			if ( empty( $order_id ) ) {
 				$this->log( 'Webhook validation failed: order_id is empty' );
@@ -168,45 +154,39 @@ class WebhookHandler {
 				);
 			}
 
-			switch ( $charge['status'] ) {
-				case 'IN_ANALYSIS':
-				case 'WAITING':
-					$order->update_status( 'on-hold', __( 'O PagBank está analisando a transação.', 'pagbank-for-woocommerce' ) );
+			if ( $charge['status'] === 'IN_ANALYSIS' ) {
+				$order->update_status( 'on-hold', __( 'O PagBank está analisando a transação.', 'pagbank-for-woocommerce' ) );
 
-					// phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores -- Default order status.
-					do_action( 'pagbank_order_on-hold', $order );
-					break;
-				case 'DECLINED':
-					$order->update_status( 'failed', __( 'O pagamento foi recusado.', 'pagbank-for-woocommerce' ) );
+				// phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores -- Default order status.
+				do_action( 'pagbank_order_on-hold', $order );
+			} elseif ( $charge['status'] === 'DECLINED' ) {
+				$order->update_status( 'failed', __( 'O pagamento foi recusado.', 'pagbank-for-woocommerce' ) );
 
-					do_action( 'pagbank_order_failed', $order );
-					break;
-				case 'PAID':
-					$order->payment_complete( $charge['id'] );
-					$order->update_meta_data( '_pagbank_charge_id', $charge['id'] );
-					$order->save_meta_data();
+				do_action( 'pagbank_order_failed', $order );
+			} elseif ( $charge['status'] === 'PAID' ) {
+				$order->payment_complete( $charge['id'] );
+				$order->update_meta_data( '_pagbank_charge_id', $charge['id'] );
+				$order->save_meta_data();
 
-					do_action( 'pagbank_order_completed', $order );
-					break;
-				case 'CANCELED':
-					$order->update_status( 'refunded', __( 'O pagamento foi cancelado.', 'pagbank-for-woocommerce' ) );
+				do_action( 'pagbank_order_completed', $order );
+			} elseif ( $charge['status'] === 'CANCELED' ) {
+				$order->update_status( 'refunded', __( 'O pagamento foi reembolsado através do PagBank.', 'pagbank-for-woocommerce' ) );
 
-					do_action( 'pagbank_order_cancelled', $order );
-					break;
+				do_action( 'pagbank_order_cancelled', $order );
 			}
 
 			$this->log( 'Webhook processed successfully' );
 
-			return wp_send_json_success(
+			wp_send_json_success(
 				array(
 					'message' => 'Webhook processed successfully',
 				),
 				200
 			);
 		} catch ( Exception $e ) {
-			return wp_send_json_error(
+			wp_send_json_error(
 				array(
-					'message' => 'Erro ao processar o webhook.',
+					'message' => 'Erro ao processar o webhook',
 				),
 				400
 			);

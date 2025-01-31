@@ -1,4 +1,4 @@
-import { a as ne } from "../ui/shared/axios-5e1c0094.js";
+import { a as ne } from "../ui/shared/axios-1edb1632.js";
 var f = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {};
 function W(e) {
   return e && e.__esModule && Object.prototype.hasOwnProperty.call(e, "default") ? e.default : e;
