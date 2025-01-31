@@ -1,7 +1,7 @@
 var he = Object.defineProperty;
 var me = (f, e, t) => e in f ? he(f, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : f[e] = t;
 var I = (f, e, t) => (me(f, typeof e != "symbol" ? e + "" : e, t), t);
-import { a as J } from "../ui/shared/axios-1edb1632.js";
+import { a as J } from "../ui/shared/axios-5e1c0094.js";
 const m = {};
 m.allowedTagList = [
   "b",
@@ -1613,8 +1613,8 @@ class pe {
 /**
  *               AutoNumeric.js
  *
- * @version      4.10.5
- * @date         2024-02-06 UTC 20:14
+ * @version      4.10.7
+ * @date         2024-10-14 UTC 01:11
  *
  * @authors      2016-2024 Alexandre Bonneau <alexandre.bonneau@linuxfr.eu>
  *               2009-2016 Bob Knothe <bob.knothe@gmail.com>
@@ -1665,7 +1665,7 @@ const r = class r {
    * @returns {string}
    */
   static version() {
-    return "4.10.5";
+    return "4.10.6";
   }
   /**
    * Initialize the AutoNumeric object onto the given DOM element, and attach the settings and related event listeners to it.
@@ -3270,7 +3270,7 @@ const r = class r {
   _getContenteditableElements(e) {
     if (i.isUndefinedOrNullOrEmpty(e) || !e.hasAttribute("id"))
       return [];
-    const t = [...e.querySelectorAll("[contenteditable=true]")], s = [...document.querySelectorAll(`*:not(input)[form=${e.id}][contenteditable=true]`)];
+    const t = [...e.querySelectorAll("[contenteditable=true]")], s = [...document.querySelectorAll(`*:not(input)[form=${e.getAttribute("id")}][contenteditable=true]`)];
     return i.arrayUnique(t, s);
   }
   /**
@@ -7666,70 +7666,76 @@ document.querySelectorAll("[data-format-currency]").forEach((f) => {
   });
 });
 document.querySelectorAll("[data-pagbank-connect-environment-select]").forEach((f) => {
-  const e = f.getAttribute(
+  const e = f.getAttribute("data-pagbank-is-localhost") === "true", t = f.getAttribute(
     "data-pagbank-connect-modal-environment-id"
   );
-  if (e === null)
+  if (t === null)
     throw new Error(
       "Missing data-pagbank-connect-modal-production-id or data-pagbank-connect-modal-sandbox-id attribute"
     );
-  const t = f.getAttribute(
+  const s = f.getAttribute(
     "data-pagbank-connect-environment-select"
   );
-  if (t === null)
-    throw new Error("Missing data-pagbank-connect-environment-select attribute");
-  const s = document.getElementById(
-    t
-  );
   if (s === null)
+    throw new Error("Missing data-pagbank-connect-environment-select attribute");
+  const a = document.getElementById(
+    s
+  );
+  if (a === null)
     throw new Error("data-pagbank-connect-environment-select element not found");
-  const a = () => {
-    const d = s.value;
-    return e.replace("{{environment}}", d);
-  }, n = () => {
-    const d = a(), g = document.getElementById(d);
-    if (g === null)
-      throw new Error(`Modal with id ${d} not found`);
-    g.classList.remove("hidden"), g.querySelectorAll("[data-modal-close-button]").forEach((p) => {
-      p.addEventListener("click", () => {
-        g.classList.add("hidden");
+  const n = () => {
+    const g = a.value;
+    return t.replace("{{environment}}", g);
+  }, c = () => {
+    const g = n(), p = document.getElementById(g);
+    if (p === null)
+      throw new Error(`Modal with id ${g} not found`);
+    p.classList.remove("hidden"), p.querySelectorAll("[data-modal-close-button]").forEach((y) => {
+      y.addEventListener("click", () => {
+        p.classList.add("hidden");
       });
     });
-  }, c = () => {
-    const d = a(), g = document.getElementById(d);
-    if (g === null)
-      throw new Error(`Modal with id ${d} not found`);
-    g.classList.add("hidden");
+  }, o = () => {
+    const g = n(), p = document.getElementById(g);
+    if (p === null)
+      throw new Error(`Modal with id ${g} not found`);
+    p.classList.add("hidden");
   };
   f.addEventListener("click", () => {
-    n();
+    if (!e) {
+      alert(
+        "A conexão com o PagBank não está disponível em http://localhost. Você poderá utilizar uma URL como http://minhaloja.localhost ou conectar-se ao PagBank quando sua loja estiver disponível em um domínio público."
+      );
+      return;
+    }
+    c();
   });
-  const o = () => {
+  const l = () => {
     f.classList.remove("button-primary"), f.setAttribute("disabled", "disabled"), f.textContent = f.getAttribute(
       "data-pagbank-loading-text"
     );
-  }, l = () => {
+  }, h = () => {
     f.removeAttribute("disabled"), f.classList.add("button-primary"), f.textContent = f.getAttribute(
       "data-pagbank-not-connected-text"
     );
-  }, h = () => {
+  }, d = () => {
     f.removeAttribute("disabled"), f.classList.remove("button-primary"), f.textContent = f.getAttribute(
       "data-pagbank-connected-text"
     );
   };
   window.addEventListener("update_pagbank_connect_oauth_status", () => {
     (async () => {
-      c(), o();
-      const { data: d } = await J.get(woocommerce_admin.ajax_url, {
+      o(), l();
+      const { data: g } = await J.get(woocommerce_admin.ajax_url, {
         params: {
           action: "pagbank_woocommerce_oauth_status",
-          environment: s.value,
+          environment: a.value,
           nonce: f.getAttribute("data-pagbank-connect-nonce")
         }
       });
-      d.oauth_status === "connected" ? h() : l();
+      g.oauth_status === "connected" ? d() : h();
     })();
-  }), s.addEventListener("change", () => {
+  }), a.addEventListener("change", () => {
     window.dispatchEvent(new Event("update_pagbank_connect_oauth_status"));
   }), window.dispatchEvent(new Event("update_pagbank_connect_oauth_status"));
 });
