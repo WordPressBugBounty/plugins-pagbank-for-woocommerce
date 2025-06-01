@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'pagbank/pagbank-for-woocommerce',
-        'pretty_version' => '1.2.2.x-dev',
-        'version' => '1.2.2.9999999-dev',
-        'reference' => 'c0ebadabcf29958cdf4ef5489d80875d06ea8b02',
+        'pretty_version' => '1.2.4.x-dev',
+        'version' => '1.2.4.9999999-dev',
+        'reference' => '4fbc5c3c3423fdd8528108f0eee1466ed1682856',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -62,9 +62,9 @@
             'dev_requirement' => false,
         ),
         'pagbank/pagbank-for-woocommerce' => array(
-            'pretty_version' => '1.2.2.x-dev',
-            'version' => '1.2.2.9999999-dev',
-            'reference' => 'c0ebadabcf29958cdf4ef5489d80875d06ea8b02',
+            'pretty_version' => '1.2.4.x-dev',
+            'version' => '1.2.4.9999999-dev',
+            'reference' => '4fbc5c3c3423fdd8528108f0eee1466ed1682856',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
