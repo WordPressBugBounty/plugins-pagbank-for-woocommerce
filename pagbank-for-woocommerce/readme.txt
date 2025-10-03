@@ -4,7 +4,7 @@ Tags: woocommerce, pagseguro, pagbank, pagamento, brasil
 Requires at least: 5.4
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.2.4
+Stable tag: 1.2.5
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -188,3 +188,7 @@ Caso o lojista não possua o identificador da conta preenchido, os produtos cada
 * Corrigido configuração para versões mais antigas do WooCommerce.
 * Adicionado suporte a novas versões do WordPress e WooCommerce.
 * Corrigido erro ao tentar pagar por um pedido criado manualmente.
+
+= 1.2.5 - 2025-09-29 =
+* Atualização de segurança das bibliotecas.
+* Corrigido erro ao tentar pagar um pedido através de link utilizando outro método de pagamento.

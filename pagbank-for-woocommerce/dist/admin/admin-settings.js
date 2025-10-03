@@ -1,7 +1,7 @@
 var he = Object.defineProperty;
 var me = (f, e, t) => e in f ? he(f, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : f[e] = t;
 var I = (f, e, t) => (me(f, typeof e != "symbol" ? e + "" : e, t), t);
-import { a as J } from "../ui/shared/axios-5e1c0094.js";
+import { a as J } from "../ui/shared/axios-88ee7624.js";
 const m = {};
 m.allowedTagList = [
   "b",
@@ -1141,10 +1141,12 @@ class i {
    *
    * This function is adapted from Big.js https://github.com/MikeMcl/big.js/. Many thanks to Mike.
    *
-   * @param {number|string} n A numeric value.
+   * @param {number|string} value A numeric value.
    * @returns {{}}
    */
   static parseStr(e) {
+    if (i.isUndefinedOrNullOrEmpty(e))
+      return { s: 1, e: 0, c: [0] };
     const t = {};
     let s, a, n, c;
     if (e === 0 && 1 / e < 0 && (e = "-0"), e = e.toString(), this.isNegativeStrict(e, "-") ? (e = e.slice(1), t.s = -1) : t.s = 1, s = e.indexOf("."), s > -1 && (e = e.replace(".", "")), s < 0 && (s = e.length), a = e.search(/[1-9]/i) === -1 ? e.length : e.search(/[1-9]/i), n = e.length, a === n)
@@ -1613,10 +1615,10 @@ class pe {
 /**
  *               AutoNumeric.js
  *
- * @version      4.10.7
- * @date         2024-10-14 UTC 01:11
+ * @version      4.10.9
+ * @date         2025-09-03 UTC 09:00
  *
- * @authors      2016-2024 Alexandre Bonneau <alexandre.bonneau@linuxfr.eu>
+ * @authors      2016-2025 Alexandre Bonneau <alexandre.bonneau@linuxfr.eu>
  *               2009-2016 Bob Knothe <bob.knothe@gmail.com>
  * @contributors Sokolov Yura and others, cf. AUTHORS
  * @copyright    Alexandre Bonneau & Robert J. Knothe
@@ -1665,7 +1667,7 @@ const r = class r {
    * @returns {string}
    */
   static version() {
-    return "4.10.6";
+    return "4.10.9";
   }
   /**
    * Initialize the AutoNumeric object onto the given DOM element, and attach the settings and related event listeners to it.
@@ -2133,7 +2135,7 @@ const r = class r {
    * @private
    */
   _createEventListeners() {
-    this.formulaMode = !1, this._onFocusInFunc = (e) => {
+    this.formulaMode = !1, this.compositioning = !1, this._onFocusInFunc = (e) => {
       this._onFocusIn(e);
     }, this._onFocusInAndMouseEnterFunc = (e) => {
       this._onFocusInAndMouseEnter(e);
@@ -2157,14 +2159,18 @@ const r = class r {
       this._onKeydownGlobal(e);
     }, this._onKeyupGlobalFunc = (e) => {
       this._onKeyupGlobal(e);
-    }, this.domElement.addEventListener("focusin", this._onFocusInFunc, !1), this.domElement.addEventListener("focus", this._onFocusInAndMouseEnterFunc, !1), this.domElement.addEventListener("focus", this._onFocusFunc, !1), this.domElement.addEventListener("mouseenter", this._onFocusInAndMouseEnterFunc, !1), this.domElement.addEventListener("keydown", this._onKeydownFunc, !1), this.domElement.addEventListener("keypress", this._onKeypressFunc, !1), this.domElement.addEventListener("keyup", this._onKeyupFunc, !1), this.domElement.addEventListener("blur", this._onFocusOutAndMouseLeaveFunc, !1), this.domElement.addEventListener("mouseleave", this._onFocusOutAndMouseLeaveFunc, !1), this.domElement.addEventListener("paste", this._onPasteFunc, !1), this.domElement.addEventListener("wheel", this._onWheelFunc, !1), this.domElement.addEventListener("drop", this._onDropFunc, !1), this._setupFormListener(), this.hasEventListeners = !0, r._doesGlobalListExists() || (document.addEventListener("keydown", this._onKeydownGlobalFunc, !1), document.addEventListener("keyup", this._onKeyupGlobalFunc, !1));
+    }, this._onCompositionstartFunc = (e) => {
+      this._onCompositionstart(e);
+    }, this._onCompositionendFunc = (e) => {
+      this._onCompositionend(e);
+    }, this.domElement.addEventListener("focusin", this._onFocusInFunc, !1), this.domElement.addEventListener("focus", this._onFocusInAndMouseEnterFunc, !1), this.domElement.addEventListener("focus", this._onFocusFunc, !1), this.domElement.addEventListener("mouseenter", this._onFocusInAndMouseEnterFunc, !1), this.domElement.addEventListener("keydown", this._onKeydownFunc, !1), this.domElement.addEventListener("keypress", this._onKeypressFunc, !1), this.domElement.addEventListener("keyup", this._onKeyupFunc, !1), this.domElement.addEventListener("blur", this._onFocusOutAndMouseLeaveFunc, !1), this.domElement.addEventListener("mouseleave", this._onFocusOutAndMouseLeaveFunc, !1), this.domElement.addEventListener("paste", this._onPasteFunc, !1), this.domElement.addEventListener("wheel", this._onWheelFunc, !1), this.domElement.addEventListener("drop", this._onDropFunc, !1), this.domElement.addEventListener("compositionstart", this._onCompositionstartFunc, !1), this.domElement.addEventListener("compositionend", this._onCompositionendFunc, !1), this._setupFormListener(), this.hasEventListeners = !0, r._doesGlobalListExists() || (document.addEventListener("keydown", this._onKeydownGlobalFunc, !1), document.addEventListener("keyup", this._onKeyupGlobalFunc, !1));
   }
   /**
    * Remove all the autoNumeric-related event listeners for the given DOM element
    * @private
    */
   _removeEventListeners() {
-    this.domElement.removeEventListener("focusin", this._onFocusInFunc, !1), this.domElement.removeEventListener("focus", this._onFocusInAndMouseEnterFunc, !1), this.domElement.removeEventListener("focus", this._onFocusFunc, !1), this.domElement.removeEventListener("mouseenter", this._onFocusInAndMouseEnterFunc, !1), this.domElement.removeEventListener("blur", this._onFocusOutAndMouseLeaveFunc, !1), this.domElement.removeEventListener("mouseleave", this._onFocusOutAndMouseLeaveFunc, !1), this.domElement.removeEventListener("keydown", this._onKeydownFunc, !1), this.domElement.removeEventListener("keypress", this._onKeypressFunc, !1), this.domElement.removeEventListener("keyup", this._onKeyupFunc, !1), this.domElement.removeEventListener("paste", this._onPasteFunc, !1), this.domElement.removeEventListener("wheel", this._onWheelFunc, !1), this.domElement.removeEventListener("drop", this._onDropFunc, !1), this._removeFormListener(), this.hasEventListeners = !1, document.removeEventListener("keydown", this._onKeydownGlobalFunc, !1), document.removeEventListener("keyup", this._onKeyupGlobalFunc, !1);
+    this.domElement.removeEventListener("focusin", this._onFocusInFunc, !1), this.domElement.removeEventListener("focus", this._onFocusInAndMouseEnterFunc, !1), this.domElement.removeEventListener("focus", this._onFocusFunc, !1), this.domElement.removeEventListener("mouseenter", this._onFocusInAndMouseEnterFunc, !1), this.domElement.removeEventListener("blur", this._onFocusOutAndMouseLeaveFunc, !1), this.domElement.removeEventListener("mouseleave", this._onFocusOutAndMouseLeaveFunc, !1), this.domElement.removeEventListener("keydown", this._onKeydownFunc, !1), this.domElement.removeEventListener("keypress", this._onKeypressFunc, !1), this.domElement.removeEventListener("keyup", this._onKeyupFunc, !1), this.domElement.removeEventListener("paste", this._onPasteFunc, !1), this.domElement.removeEventListener("wheel", this._onWheelFunc, !1), this.domElement.removeEventListener("drop", this._onDropFunc, !1), this.domElement.removeEventListener("compositionstart", this._onCompositionstartFunc, !1), this.domElement.removeEventListener("compositionend", this._onCompositionendFunc, !1), this._removeFormListener(), this.hasEventListeners = !1, document.removeEventListener("keydown", this._onKeydownGlobalFunc, !1), document.removeEventListener("keyup", this._onKeyupGlobalFunc, !1);
   }
   /**
    * Toggle the event listeners according to the `noEventListeners` option, if those were not activated/deactivated before
@@ -4899,7 +4905,7 @@ To solve that, you'd need to either set \`decimalPlacesRawValue\` to \`null\`, o
    * @private
    */
   static _cleanValueForRangeParse(e) {
-    return e = e.toString().replace(",", "."), i.parseStr(e);
+    return i.isNull(e) || (e = e.toString().replace(",", ".")), i.parseStr(e);
   }
   /**
    * Returns `true` is the value is superior or equal to the `minimumValue` limit, discarding any override options
@@ -5180,6 +5186,8 @@ To solve that, you'd need to either set \`decimalPlacesRawValue\` to \`null\`, o
    * @param {KeyboardEvent} e
    */
   _onKeydown(e) {
+    if (this.compositioning)
+      return;
     if (this.formatted = !1, this.isEditing = !0, !this.formulaMode && !this.isFocused && this.settings.unformatOnHover && e.altKey && this.domElement === i.getHoveredElement()) {
       this.constructor._unformatAltHovered(this);
       return;
@@ -5232,6 +5240,8 @@ To solve that, you'd need to either set \`decimalPlacesRawValue\` to \`null\`, o
    * @param {KeyboardEvent} e
    */
   _onKeypress(e) {
+    if (this.compositioning)
+      return;
     if (this.formulaMode) {
       if (this._acceptNonPrintableKeysInFormulaMode() || this.settings.formulaChars.test(this.eventKey))
         return;
@@ -5271,7 +5281,7 @@ To solve that, you'd need to either set \`decimalPlacesRawValue\` to \`null\`, o
    * @param {KeyboardEvent} e
    */
   _onKeyup(e) {
-    if (this.isEditing = !1, this.keydownEventCounter = 0, this.formulaMode)
+    if (this.compositioning || (this.isEditing = !1, this.keydownEventCounter = 0, this.formulaMode))
       return;
     if (this.settings.isCancellable && this.eventKey === m.keyName.Esc) {
       e.preventDefault();
@@ -5421,25 +5431,25 @@ To solve that, you'd need to either set \`decimalPlacesRawValue\` to \`null\`, o
       case r.options.onInvalidPaste.truncate:
       case r.options.onInvalidPaste.replace:
         const L = i.parseStr(this.settings.minimumValue), O = i.parseStr(this.settings.maximumValue);
-        let C = v, T = 0, Z = S;
+        let F = v, T = 0, Z = S;
         for (; T < d.length && (Z += d[T], v = Z + w, !!this.constructor._checkIfInRange(v, L, O)); )
-          C = v, T++;
+          F = v, T++;
         if (g += T, U && g++, this.settings.onInvalidPaste === r.options.onInvalidPaste.truncate) {
-          v = C, P && g--;
+          v = F, P && g--;
           break;
         }
         let A = g;
-        const ce = C.length;
+        const ce = F.length;
         for (; T < d.length && A < ce; ) {
-          if (C[A] === ".") {
+          if (F[A] === ".") {
             A++;
             continue;
           }
-          if (v = i.replaceCharAt(C, A, d[T]), !this.constructor._checkIfInRange(v, L, O))
+          if (v = i.replaceCharAt(F, A, d[T]), !this.constructor._checkIfInRange(v, L, O))
             break;
-          C = v, T++, A++;
+          F = v, T++, A++;
         }
-        g = A, P && g--, v = C;
+        g = A, P && g--, v = F;
         break;
       case r.options.onInvalidPaste.error:
       case r.options.onInvalidPaste.ignore:
@@ -5633,6 +5643,33 @@ To solve that, you'd need to either set \`decimalPlacesRawValue\` to \`null\`, o
         this.constructor._reformatAltHovered(s);
       }
     }
+  }
+  /**
+   * Handler for 'compositionstart' events. 
+   * 
+   * When using IME (Input Method Editor) to input characters, the browser will fire a 'compositionstart' event when the user starts typing in the IME,
+   * and a 'compositionend' event when the user has finished typing and the characters are committed.
+   * During the composition, the value is not yet formatted, and the user can still change the input.
+   *
+   * @param {CompositionEvent} e
+   * @private
+   */
+  _onCompositionstart(e) {
+    const t = { key: m.keyName.Space, which: "32", keyCode: "32" }, s = new KeyboardEvent("keydown", t);
+    e.target.dispatchEvent(s), this.compositioning = !0;
+  }
+  /**
+   * Handler for 'compositionend' events.
+   * 
+   * @param {CompositionEvent} e
+   * @private
+   */
+  _onCompositionend(e) {
+    this.compositioning = !1;
+    const t = { key: m.keyName.Space, which: "32", keyCode: "32" }, s = new KeyboardEvent("keypress", t);
+    e.target.dispatchEvent(s);
+    const a = new KeyboardEvent("keyup", t);
+    e.target.dispatchEvent(a);
   }
   /**
    * Return `true` if the DOM element is supported by autoNumeric.
@@ -7452,7 +7489,7 @@ u.defaultSettings = {
 };
 Object.freeze(u.defaultSettings);
 Object.defineProperty(u, "defaultSettings", { configurable: !1, writable: !1 });
-const F = {
+const C = {
   // Français
   digitGroupSeparator: u.options.digitGroupSeparator.dot,
   // or '\u202f'
@@ -7474,21 +7511,21 @@ const F = {
   currencySymbol: u.options.currencySymbol.yen,
   currencySymbolPlacement: u.options.currencySymbolPlacement.prefix,
   negativePositiveSignPlacement: u.options.negativePositiveSignPlacement.right
-}, ye = i.cloneObject(F);
+}, ye = i.cloneObject(C);
 ye.formulaMode = u.options.formulaMode.enabled;
-const X = i.cloneObject(F);
+const X = i.cloneObject(C);
 X.minimumValue = 0;
-const z = i.cloneObject(F);
+const z = i.cloneObject(C);
 z.maximumValue = 0;
 z.negativePositiveSignPlacement = u.options.negativePositiveSignPlacement.prefix;
-const B = i.cloneObject(F);
+const B = i.cloneObject(C);
 B.digitGroupSeparator = u.options.digitGroupSeparator.normalSpace;
 const Q = i.cloneObject(B);
 Q.minimumValue = 0;
 const K = i.cloneObject(B);
 K.maximumValue = 0;
 K.negativePositiveSignPlacement = u.options.negativePositiveSignPlacement.prefix;
-const x = i.cloneObject(F);
+const x = i.cloneObject(C);
 x.currencySymbol = u.options.currencySymbol.none;
 x.suffixText = ` ${u.options.suffixText.percentage}`;
 x.wheelStep = 1e-4;
@@ -7529,10 +7566,10 @@ const ae = i.cloneObject(G);
 ae.decimalPlaces = 3;
 const oe = i.cloneObject($);
 oe.decimalPlaces = 3;
-const le = i.cloneObject(F);
+const le = i.cloneObject(C);
 le.currencySymbol = u.options.currencySymbol.lira;
 u.predefinedOptions = {
-  euro: F,
+  euro: C,
   euroPos: X,
   euroNeg: z,
   euroSpace: B,
@@ -7554,9 +7591,9 @@ u.predefinedOptions = {
   percentageUS3dec: re,
   percentageUS3decPos: ae,
   percentageUS3decNeg: oe,
-  French: F,
+  French: C,
   // Français
-  Spanish: F,
+  Spanish: C,
   // Español
   NorthAmerican: k,
   British: {

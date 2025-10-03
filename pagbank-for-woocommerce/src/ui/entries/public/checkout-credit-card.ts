@@ -1,5 +1,6 @@
 import axios from "axios";
 import cardValidator from "card-validator";
+import escapeHtml from "escape-html";
 import first from "lodash/first";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -91,6 +92,12 @@ const scrollToNotices = (): void => {
 	jQuery.scroll_to_notices(scrollElement);
 };
 
+const clearCheckoutErrors = (): void => {
+	const $container = jQuery(".woocommerce-notices-wrapper");
+
+	$container.empty();
+};
+
 const submitCheckoutError = (errorMessage: string): void => {
 	const isOrderReview = jQuery(document.body).hasClass("woocommerce-order-pay");
 
@@ -104,7 +111,7 @@ const submitCheckoutError = (errorMessage: string): void => {
 			'<div class="woocommerce-NoticeGroup woocommerce-NoticeGroup-checkout">' +
 				'<ul class="woocommerce-error" role="alert">' +
 				"<li>" +
-				errorMessage +
+				escapeHtml(errorMessage) +
 				"</li>" +
 				"</ul>" +
 				"</div>",
@@ -129,7 +136,7 @@ const submitCheckoutError = (errorMessage: string): void => {
 			'<div class="woocommerce-NoticeGroup woocommerce-NoticeGroup-checkout">' +
 				'<ul class="woocommerce-error" role="alert">' +
 				"<li>" +
-				errorMessage +
+				escapeHtml(errorMessage) +
 				"</li>" +
 				"</ul>" +
 				"</div>",
@@ -142,7 +149,7 @@ const submitCheckoutError = (errorMessage: string): void => {
 
 		scrollToNotices();
 
-		jQuery(document.body).trigger("checkout_error", [errorMessage]);
+		jQuery(document.body).trigger("checkout_error", [escapeHtml(errorMessage)]);
 	}
 };
 
@@ -308,9 +315,18 @@ wcForms.orderReview.on(
 	(event: JQuery.SubmitEvent<unknown, unknown, HTMLFormElement, unknown>) => {
 		event.preventDefault();
 
-		const shouldContinue = processEncryptedCard();
+		const isPagBankCreditCard = jQuery(
+			"input#payment_method_pagbank_credit_card[name=payment_method]",
+			event.currentTarget,
+		).is(":checked");
+
+		const shouldContinue = !isPagBankCreditCard || processEncryptedCard();
 
 		if (shouldContinue) {
+			if (!isPagBankCreditCard) {
+				clearCheckoutErrors();
+			}
+
 			event.currentTarget.submit();
 		}
 	},

@@ -1,9 +1,9 @@
-import { a as se } from "../ui/shared/axios-5e1c0094.js";
+import { a as ce } from "../ui/shared/axios-88ee7624.js";
 var f = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {};
-function ee(e) {
+function q(e) {
   return e && e.__esModule && Object.prototype.hasOwnProperty.call(e, "default") ? e.default : e;
 }
-var ce = {
+var le = {
   visa: {
     niceType: "Visa",
     type: "visa",
@@ -197,64 +197,64 @@ var ce = {
       size: 3
     }
   }
-}, le = ce, S = {}, T = {};
+}, ue = le, j = {}, T = {};
 Object.defineProperty(T, "__esModule", { value: !0 });
 T.clone = void 0;
-function ue(e) {
+function de(e) {
   return e ? JSON.parse(JSON.stringify(e)) : null;
 }
-T.clone = ue;
-var j = {};
-Object.defineProperty(j, "__esModule", { value: !0 });
-j.matches = void 0;
-function de(e, r, t) {
+T.clone = de;
+var S = {};
+Object.defineProperty(S, "__esModule", { value: !0 });
+S.matches = void 0;
+function fe(e, r, t) {
   var n = String(r).length, a = e.substr(0, n), i = parseInt(a, 10);
   return r = parseInt(String(r).substr(0, a.length), 10), t = parseInt(String(t).substr(0, a.length), 10), i >= r && i <= t;
 }
-function fe(e, r) {
+function pe(e, r) {
   return r = String(r), r.substring(0, e.length) === e.substring(0, r.length);
 }
-function pe(e, r) {
-  return Array.isArray(r) ? de(e, r[0], r[1]) : fe(e, r);
+function me(e, r) {
+  return Array.isArray(r) ? fe(e, r[0], r[1]) : pe(e, r);
 }
-j.matches = pe;
-Object.defineProperty(S, "__esModule", { value: !0 });
-S.addMatchingCardsToResults = void 0;
-var me = T, he = j;
-function ve(e, r, t) {
+S.matches = me;
+Object.defineProperty(j, "__esModule", { value: !0 });
+j.addMatchingCardsToResults = void 0;
+var he = T, ve = S;
+function ge(e, r, t) {
   var n, a;
   for (n = 0; n < r.patterns.length; n++) {
     var i = r.patterns[n];
-    if (he.matches(e, i)) {
-      var c = me.clone(r);
+    if (ve.matches(e, i)) {
+      var c = he.clone(r);
       Array.isArray(i) ? a = String(i[0]).length : a = String(i).length, e.length >= a && (c.matchStrength = a), t.push(c);
       break;
     }
   }
 }
-S.addMatchingCardsToResults = ve;
-var $ = {};
-Object.defineProperty($, "__esModule", { value: !0 });
-$.isValidInputType = void 0;
-function ge(e) {
+j.addMatchingCardsToResults = ge;
+var x = {};
+Object.defineProperty(x, "__esModule", { value: !0 });
+x.isValidInputType = void 0;
+function ye(e) {
   return typeof e == "string" || e instanceof String;
 }
-$.isValidInputType = ge;
-var B = {};
-Object.defineProperty(B, "__esModule", { value: !0 });
-B.findBestMatch = void 0;
-function ye(e) {
+x.isValidInputType = ye;
+var $ = {};
+Object.defineProperty($, "__esModule", { value: !0 });
+$.findBestMatch = void 0;
+function _e(e) {
   var r = e.filter(function(t) {
     return t.matchStrength;
   }).length;
   return r > 0 && r === e.length;
 }
-function _e(e) {
-  return ye(e) ? e.reduce(function(r, t) {
+function be(e) {
+  return _e(e) ? e.reduce(function(r, t) {
     return !r || Number(r.matchStrength) < Number(t.matchStrength) ? t : r;
   }) : null;
 }
-B.findBestMatch = _e;
+$.findBestMatch = be;
 var D = f && f.__assign || function() {
   return D = Object.assign || function(e) {
     for (var r, t = 1, n = arguments.length; t < n; t++) {
@@ -264,7 +264,7 @@ var D = f && f.__assign || function() {
     }
     return e;
   }, D.apply(this, arguments);
-}, re = le, be = S, Ce = $, Ve = B, O = T, P = {}, d = {
+}, te = ue, Ce = j, we = x, Ve = $, O = T, P = {}, d = {
   VISA: "visa",
   MASTERCARD: "mastercard",
   AMERICAN_EXPRESS: "american-express",
@@ -277,7 +277,7 @@ var D = f && f.__assign || function() {
   MIR: "mir",
   HIPER: "hiper",
   HIPERCARD: "hipercard"
-}, te = [
+}, ne = [
   d.VISA,
   d.MASTERCARD,
   d.AMERICAN_EXPRESS,
@@ -290,16 +290,16 @@ var D = f && f.__assign || function() {
   d.MIR,
   d.HIPER,
   d.HIPERCARD
-], g = O.clone(te);
-function J(e) {
-  return P[e] || re[e];
+], g = O.clone(ne);
+function K(e) {
+  return P[e] || te[e];
 }
-function we() {
+function ke() {
   return g.map(function(e) {
-    return O.clone(J(e));
+    return O.clone(K(e));
   });
 }
-function q(e, r) {
+function W(e, r) {
   r === void 0 && (r = !1);
   var t = g.indexOf(e);
   if (!r && t === -1)
@@ -308,30 +308,30 @@ function q(e, r) {
 }
 function y(e) {
   var r = [];
-  if (!Ce.isValidInputType(e))
+  if (!we.isValidInputType(e))
     return r;
   if (e.length === 0)
-    return we();
+    return ke();
   g.forEach(function(n) {
-    var a = J(n);
-    be.addMatchingCardsToResults(e, a, r);
+    var a = K(n);
+    Ce.addMatchingCardsToResults(e, a, r);
   });
   var t = Ve.findBestMatch(r);
   return t ? [t] : r;
 }
 y.getTypeInfo = function(e) {
-  return O.clone(J(e));
+  return O.clone(K(e));
 };
 y.removeCard = function(e) {
-  var r = q(e);
+  var r = W(e);
   g.splice(r, 1);
 };
 y.addCard = function(e) {
-  var r = q(e.type, !0);
+  var r = W(e.type, !0);
   P[e.type] = e, r === -1 && g.push(e.type);
 };
 y.updateCard = function(e, r) {
-  var t = P[e] || re[e];
+  var t = P[e] || te[e];
   if (!t)
     throw new Error('"' + e + "\" is not a recognized type. Use `addCard` instead.'");
   if (r.type && t.type !== r.type)
@@ -340,34 +340,34 @@ y.updateCard = function(e, r) {
   n = D(D({}, n), r), P[n.type] = n;
 };
 y.changeOrder = function(e, r) {
-  var t = q(e);
+  var t = W(e);
   g.splice(t, 1), g.splice(r, 0, e);
 };
 y.resetModifications = function() {
-  g = O.clone(te), P = {};
+  g = O.clone(ne), P = {};
 };
 y.types = d;
-var ne = y, x = {};
-Object.defineProperty(x, "__esModule", { value: !0 });
-x.cardholderName = void 0;
+var ae = y, B = {};
+Object.defineProperty(B, "__esModule", { value: !0 });
+B.cardholderName = void 0;
 var Ee = /^[\d\s-]*$/, Ie = 255;
-function E(e, r) {
+function k(e, r) {
   return { isValid: e, isPotentiallyValid: r };
 }
-function ke(e) {
-  return typeof e != "string" ? E(!1, !1) : e.length === 0 ? E(!1, !0) : e.length > Ie ? E(!1, !1) : Ee.test(e) ? E(!1, !0) : E(!0, !0);
-}
-x.cardholderName = ke;
-var L = {};
 function Pe(e) {
+  return typeof e != "string" ? k(!1, !1) : e.length === 0 ? k(!1, !0) : e.length > Ie ? k(!1, !1) : Ee.test(e) ? k(!1, !0) : k(!0, !0);
+}
+B.cardholderName = Pe;
+var L = {};
+function Te(e) {
   for (var r = 0, t = !1, n = e.length - 1, a; n >= 0; )
     a = parseInt(e.charAt(n), 10), t && (a *= 2, a > 9 && (a = a % 10 + 1)), t = !t, r += a, n--;
   return r % 10 === 0;
 }
-var Te = Pe;
+var Oe = Te;
 Object.defineProperty(L, "__esModule", { value: !0 });
 L.cardNumber = void 0;
-var Oe = Te, W = ne;
+var Me = Oe, ee = ae;
 function _(e, r, t) {
   return {
     card: e,
@@ -375,7 +375,7 @@ function _(e, r, t) {
     isValid: t
   };
 }
-function Me(e, r) {
+function Ne(e, r) {
   r === void 0 && (r = {});
   var t, n, a;
   if (typeof e != "string" && typeof e != "number")
@@ -383,7 +383,7 @@ function Me(e, r) {
   var i = String(e).replace(/-|\s/g, "");
   if (!/^\d*$/.test(i))
     return _(null, !1, !1);
-  var c = W(i);
+  var c = ee(i);
   if (c.length === 0)
     return _(null, !1, !1);
   if (c.length !== 1)
@@ -391,17 +391,17 @@ function Me(e, r) {
   var o = c[0];
   if (r.maxLength && i.length > r.maxLength)
     return _(o, !1, !1);
-  o.type === W.types.UNIONPAY && r.luhnValidateUnionPay !== !0 ? n = !0 : n = Oe(i), a = Math.max.apply(null, o.lengths), r.maxLength && (a = Math.min(r.maxLength, a));
+  o.type === ee.types.UNIONPAY && r.luhnValidateUnionPay !== !0 ? n = !0 : n = Me(i), a = Math.max.apply(null, o.lengths), r.maxLength && (a = Math.min(r.maxLength, a));
   for (var l = 0; l < o.lengths.length; l++)
     if (o.lengths[l] === i.length)
       return t = i.length < a || n, _(o, t, n);
   return _(o, i.length < a, !1);
 }
-L.cardNumber = Me;
-var Y = {}, U = {}, V = {};
-Object.defineProperty(V, "__esModule", { value: !0 });
-V.expirationYear = void 0;
-var Ne = 19;
+L.cardNumber = Ne;
+var Y = {}, H = {}, w = {};
+Object.defineProperty(w, "__esModule", { value: !0 });
+w.expirationYear = void 0;
+var Ae = 19;
 function v(e, r, t) {
   return {
     isValid: e,
@@ -409,8 +409,8 @@ function v(e, r, t) {
     isCurrentYear: t || !1
   };
 }
-function Ae(e, r) {
-  r === void 0 && (r = Ne);
+function De(e, r) {
+  r === void 0 && (r = Ae);
   var t;
   if (typeof e != "string")
     return v(!1, !1);
@@ -437,23 +437,23 @@ function Ae(e, r) {
     n === 4 && (t = a === o, m = o >= a && o <= a + r);
   return v(m, m, t);
 }
-V.expirationYear = Ae;
-var H = {};
-Object.defineProperty(H, "__esModule", { value: !0 });
-H.isArray = void 0;
-H.isArray = Array.isArray || function(e) {
+w.expirationYear = De;
+var U = {};
+Object.defineProperty(U, "__esModule", { value: !0 });
+U.isArray = void 0;
+U.isArray = Array.isArray || function(e) {
   return Object.prototype.toString.call(e) === "[object Array]";
 };
-Object.defineProperty(U, "__esModule", { value: !0 });
-U.parseDate = void 0;
-var De = V, Re = H;
+Object.defineProperty(H, "__esModule", { value: !0 });
+H.parseDate = void 0;
+var Re = w, je = U;
 function Se(e) {
   var r = Number(e[0]), t;
-  return r === 0 ? 2 : r > 1 || r === 1 && Number(e[1]) > 2 ? 1 : r === 1 ? (t = e.substr(1), De.expirationYear(t).isPotentiallyValid ? 1 : 2) : e.length === 5 ? 1 : e.length > 5 ? 2 : 1;
+  return r === 0 ? 2 : r > 1 || r === 1 && Number(e[1]) > 2 ? 1 : r === 1 ? (t = e.substr(1), Re.expirationYear(t).isPotentiallyValid ? 1 : 2) : e.length === 5 ? 1 : e.length > 5 ? 2 : 1;
 }
-function je(e) {
+function xe(e) {
   var r;
-  if (/^\d{4}-\d{1,2}$/.test(e) ? r = e.split("-").reverse() : /\//.test(e) ? r = e.split(/\s*\/\s*/g) : /\s/.test(e) && (r = e.split(/ +/g)), Re.isArray(r))
+  if (/^\d{4}-\d{1,2}$/.test(e) ? r = e.split("-").reverse() : /\//.test(e) ? r = e.split(/\s*\/\s*/g) : /\s/.test(e) && (r = e.split(/ +/g)), je.isArray(r))
     return {
       month: r[0] || "",
       year: r.slice(1).join()
@@ -464,11 +464,11 @@ function je(e) {
     year: e.substr(n.length)
   };
 }
-U.parseDate = je;
+H.parseDate = xe;
 var M = {};
 Object.defineProperty(M, "__esModule", { value: !0 });
 M.expirationMonth = void 0;
-function I(e, r, t) {
+function E(e, r, t) {
   return {
     isValid: e,
     isPotentiallyValid: r,
@@ -478,32 +478,32 @@ function I(e, r, t) {
 function $e(e) {
   var r = (/* @__PURE__ */ new Date()).getMonth() + 1;
   if (typeof e != "string")
-    return I(!1, !1);
+    return E(!1, !1);
   if (e.replace(/\s/g, "") === "" || e === "0")
-    return I(!1, !0);
+    return E(!1, !0);
   if (!/^\d*$/.test(e))
-    return I(!1, !1);
+    return E(!1, !1);
   var t = parseInt(e, 10);
   if (isNaN(Number(e)))
-    return I(!1, !1);
+    return E(!1, !1);
   var n = t > 0 && t < 13;
-  return I(n, n, n && t >= r);
+  return E(n, n, n && t >= r);
 }
 M.expirationMonth = $e;
-var X = f && f.__assign || function() {
-  return X = Object.assign || function(e) {
+var J = f && f.__assign || function() {
+  return J = Object.assign || function(e) {
     for (var r, t = 1, n = arguments.length; t < n; t++) {
       r = arguments[t];
       for (var a in r)
         Object.prototype.hasOwnProperty.call(r, a) && (e[a] = r[a]);
     }
     return e;
-  }, X.apply(this, arguments);
+  }, J.apply(this, arguments);
 };
 Object.defineProperty(Y, "__esModule", { value: !0 });
 Y.expirationDate = void 0;
-var Be = U, xe = M, Le = V;
-function k(e, r, t, n) {
+var Be = H, Le = M, Ye = w;
+function I(e, r, t, n) {
   return {
     isValid: e,
     isPotentiallyValid: r,
@@ -511,125 +511,165 @@ function k(e, r, t, n) {
     year: n
   };
 }
-function Ye(e, r) {
+function He(e, r) {
   var t;
   if (typeof e == "string")
     e = e.replace(/^(\d\d) (\d\d(\d\d)?)$/, "$1/$2"), t = Be.parseDate(String(e));
   else if (e !== null && typeof e == "object") {
-    var n = X({}, e);
+    var n = J({}, e);
     t = {
       month: String(n.month),
       year: String(n.year)
     };
   } else
-    return k(!1, !1, null, null);
-  var a = xe.expirationMonth(t.month), i = Le.expirationYear(t.year, r);
+    return I(!1, !1, null, null);
+  var a = Le.expirationMonth(t.month), i = Ye.expirationYear(t.year, r);
   if (a.isValid) {
     if (i.isCurrentYear) {
       var c = a.isValidForThisYear;
-      return k(c, c, t.month, t.year);
+      return I(c, c, t.month, t.year);
     }
     if (i.isValid)
-      return k(!0, !0, t.month, t.year);
+      return I(!0, !0, t.month, t.year);
   }
-  return a.isPotentiallyValid && i.isPotentiallyValid ? k(!1, !0, null, null) : k(!1, !1, null, null);
+  return a.isPotentiallyValid && i.isPotentiallyValid ? I(!1, !0, null, null) : I(!1, !1, null, null);
 }
-Y.expirationDate = Ye;
+Y.expirationDate = He;
 var Q = {};
 Object.defineProperty(Q, "__esModule", { value: !0 });
 Q.cvv = void 0;
-var ae = 3;
+var ie = 3;
 function Ue(e, r) {
   for (var t = 0; t < e.length; t++)
     if (r === e[t])
       return !0;
   return !1;
 }
-function He(e) {
-  for (var r = ae, t = 0; t < e.length; t++)
+function Qe(e) {
+  for (var r = ie, t = 0; t < e.length; t++)
     r = e[t] > r ? e[t] : r;
   return r;
 }
 function C(e, r) {
   return { isValid: e, isPotentiallyValid: r };
 }
-function Qe(e, r) {
-  return r === void 0 && (r = ae), r = r instanceof Array ? r : [r], typeof e != "string" || !/^\d*$/.test(e) ? C(!1, !1) : Ue(r, e.length) ? C(!0, !0) : e.length < Math.min.apply(null, r) ? C(!1, !0) : e.length > He(r) ? C(!1, !1) : C(!0, !0);
+function ze(e, r) {
+  return r === void 0 && (r = ie), r = r instanceof Array ? r : [r], typeof e != "string" || !/^\d*$/.test(e) ? C(!1, !1) : Ue(r, e.length) ? C(!0, !0) : e.length < Math.min.apply(null, r) ? C(!1, !0) : e.length > Qe(r) ? C(!1, !1) : C(!0, !0);
 }
-Q.cvv = Qe;
+Q.cvv = ze;
 var z = {};
 Object.defineProperty(z, "__esModule", { value: !0 });
 z.postalCode = void 0;
-var ze = 3;
+var Ge = 3;
 function F(e, r) {
   return { isValid: e, isPotentiallyValid: r };
 }
-function Ge(e, r) {
+function Fe(e, r) {
   r === void 0 && (r = {});
-  var t = r.minLength || ze;
+  var t = r.minLength || Ge;
   return typeof e != "string" ? F(!1, !1) : e.length < t ? F(!1, !0) : F(!0, !0);
 }
-z.postalCode = Ge;
-var Fe = f && f.__createBinding || (Object.create ? function(e, r, t, n) {
+z.postalCode = Fe;
+var Xe = f && f.__createBinding || (Object.create ? function(e, r, t, n) {
   n === void 0 && (n = t), Object.defineProperty(e, n, { enumerable: !0, get: function() {
     return r[t];
   } });
 } : function(e, r, t, n) {
   n === void 0 && (n = t), e[n] = r[t];
-}), Xe = f && f.__setModuleDefault || (Object.create ? function(e, r) {
+}), Je = f && f.__setModuleDefault || (Object.create ? function(e, r) {
   Object.defineProperty(e, "default", { enumerable: !0, value: r });
 } : function(e, r) {
   e.default = r;
-}), Je = f && f.__importStar || function(e) {
+}), qe = f && f.__importStar || function(e) {
   if (e && e.__esModule)
     return e;
   var r = {};
   if (e != null)
     for (var t in e)
-      t !== "default" && Object.prototype.hasOwnProperty.call(e, t) && Fe(r, e, t);
-  return Xe(r, e), r;
-}, qe = Je(ne), Ke = x, We = L, Ze = Y, er = M, rr = V, tr = Q, nr = z, ar = {
-  creditCardType: qe,
-  cardholderName: Ke.cardholderName,
-  number: We.cardNumber,
-  expirationDate: Ze.expirationDate,
-  expirationMonth: er.expirationMonth,
-  expirationYear: rr.expirationYear,
-  cvv: tr.cvv,
-  postalCode: nr.postalCode
-}, ir = ar;
-const N = /* @__PURE__ */ ee(ir);
-function or(e) {
+      t !== "default" && Object.prototype.hasOwnProperty.call(e, t) && Xe(r, e, t);
+  return Je(r, e), r;
+}, Ke = qe(ae), We = B, Ze = L, er = Y, rr = M, tr = w, nr = Q, ar = z, ir = {
+  creditCardType: Ke,
+  cardholderName: We.cardholderName,
+  number: Ze.cardNumber,
+  expirationDate: er.expirationDate,
+  expirationMonth: rr.expirationMonth,
+  expirationYear: tr.expirationYear,
+  cvv: nr.cvv,
+  postalCode: ar.postalCode
+}, or = ir;
+const N = /* @__PURE__ */ q(or);
+/*!
+ * escape-html
+ * Copyright(c) 2012-2013 TJ Holowaychuk
+ * Copyright(c) 2015 Andreas Lubbe
+ * Copyright(c) 2015 Tiancheng "Timothy" Gu
+ * MIT Licensed
+ */
+var sr = /["'&<>]/, cr = lr;
+function lr(e) {
+  var r = "" + e, t = sr.exec(r);
+  if (!t)
+    return r;
+  var n, a = "", i = 0, c = 0;
+  for (i = t.index; i < r.length; i++) {
+    switch (r.charCodeAt(i)) {
+      case 34:
+        n = "&quot;";
+        break;
+      case 38:
+        n = "&amp;";
+        break;
+      case 39:
+        n = "&#39;";
+        break;
+      case 60:
+        n = "&lt;";
+        break;
+      case 62:
+        n = "&gt;";
+        break;
+      default:
+        continue;
+    }
+    c !== i && (a += r.substring(c, i)), c = i + 1, a += n;
+  }
+  return c !== i ? a + r.substring(c, i) : a;
+}
+const X = /* @__PURE__ */ q(cr);
+function ur(e) {
   return e && e.length ? e[0] : void 0;
 }
-var sr = or, cr = sr;
-const lr = /* @__PURE__ */ ee(cr), R = {
+var dr = ur, fr = dr;
+const pr = /* @__PURE__ */ q(fr), R = {
   checkout: jQuery("form.checkout"),
   orderReview: jQuery("form#order_review")
-}, Z = () => {
+}, re = () => {
   const e = jQuery(document.body).hasClass("woocommerce-order-pay"), r = e ? R.orderReview : R.checkout;
   let t = jQuery(
     e ? ".woocommerce-notices-wrapper" : ".woocommerce-NoticeGroup-updateOrderReview, .woocommerce-NoticeGroup-checkout"
   );
   t.length > 0 || (t = r), jQuery.scroll_to_notices(t);
+}, mr = () => {
+  jQuery(".woocommerce-notices-wrapper").empty();
 }, A = (e) => {
   if (jQuery(document.body).hasClass("woocommerce-order-pay")) {
     const t = jQuery(".woocommerce-notices-wrapper"), n = jQuery("form#order_review");
     t.empty(), t.append(
-      '<div class="woocommerce-NoticeGroup woocommerce-NoticeGroup-checkout"><ul class="woocommerce-error" role="alert"><li>' + e + "</li></ul></div>"
+      '<div class="woocommerce-NoticeGroup woocommerce-NoticeGroup-checkout"><ul class="woocommerce-error" role="alert"><li>' + X(e) + "</li></ul></div>"
     ), setTimeout(() => {
       n.removeClass("processing").unblock();
-    }, 500), n.find(".input-text, select, input:checkbox").trigger("validate").trigger("blur"), Z();
+    }, 500), n.find(".input-text, select, input:checkbox").trigger("validate").trigger("blur"), re();
   } else {
     jQuery(
       ".woocommerce-NoticeGroup-checkout, .woocommerce-error, .woocommerce-message"
     ).remove();
     const t = jQuery("form.checkout");
     t.prepend(
-      '<div class="woocommerce-NoticeGroup woocommerce-NoticeGroup-checkout"><ul class="woocommerce-error" role="alert"><li>' + e + "</li></ul></div>"
-    ), t.removeClass("processing").unblock(), t.find(".input-text, select, input:checkbox").trigger("validate").trigger("blur"), Z(), jQuery(document.body).trigger("checkout_error", [e]);
+      '<div class="woocommerce-NoticeGroup woocommerce-NoticeGroup-checkout"><ul class="woocommerce-error" role="alert"><li>' + X(e) + "</li></ul></div>"
+    ), t.removeClass("processing").unblock(), t.find(".input-text, select, input:checkbox").trigger("validate").trigger("blur"), re(), jQuery(document.body).trigger("checkout_error", [X(e)]);
   }
-}, ie = () => {
+}, oe = () => {
   const e = document.querySelector(
     "[name=wc-pagbank_credit_card-payment-token]:checked"
   );
@@ -657,8 +697,8 @@ const lr = /* @__PURE__ */ ee(cr), R = {
     }) => {
       if (!N.cardholderName(p).isValid)
         throw new Error(PagBankCheckoutCreditCardVariables.messages.invalid_holder_name);
-      const K = N.number(s);
-      if (K.card == null || !K.isValid)
+      const Z = N.number(s);
+      if (Z.card == null || !Z.isValid)
         throw new Error(PagBankCheckoutCreditCardVariables.messages.invalid_card_number);
       const G = N.expirationDate(u);
       if (!G.isValid)
@@ -700,18 +740,18 @@ const lr = /* @__PURE__ */ ee(cr), R = {
     };
     if (l.hasErrors) {
       const p = l.errors.map((s) => m[s.code]);
-      throw new Error(lr(p));
+      throw new Error(pr(p));
     }
-    const w = document.getElementById(
+    const V = document.getElementById(
       "pagbank_credit_card-encrypted-card"
     ), b = document.getElementById(
       "pagbank_credit_card-card-bin"
     );
-    if (w == null)
+    if (V == null)
       throw new Error(PagBankCheckoutCreditCardVariables.messages.invalid_encrypted_card);
     if (b === null)
       throw new Error(PagBankCheckoutCreditCardVariables.messages.invalid_card_bin);
-    return w.value = l.encryptedCard, b.value = o.number.substring(0, 6), !0;
+    return V.value = l.encryptedCard, b.value = o.number.substring(0, 6), !0;
   } catch (r) {
     return r instanceof Error && A(r.message), !1;
   }
@@ -719,11 +759,16 @@ const lr = /* @__PURE__ */ ee(cr), R = {
 R.orderReview.on(
   "submit",
   (e) => {
-    e.preventDefault(), ie() && e.currentTarget.submit();
+    e.preventDefault();
+    const r = jQuery(
+      "input#payment_method_pagbank_credit_card[name=payment_method]",
+      e.currentTarget
+    ).is(":checked");
+    (!r || oe()) && (r || mr(), e.currentTarget.submit());
   }
 );
-R.checkout.on("checkout_place_order_pagbank_credit_card", ie);
-const oe = () => {
+R.checkout.on("checkout_place_order_pagbank_credit_card", oe);
+const se = () => {
   try {
     if (!(PagBankCheckoutCreditCardVariables.settings.installments_enabled && PagBankCheckoutCreditCardVariables.settings.transfer_of_interest_enabled))
       return;
@@ -755,10 +800,10 @@ const oe = () => {
           new Option(u.title, u.installments.toString(), u.installments === 1)
         );
       }), t.removeAttribute("disabled");
-    }, w = async (s) => {
+    }, V = async (s) => {
       l(!0);
       try {
-        const { data: u } = await se.get(c, {
+        const { data: u } = await ce.get(c, {
           params: {
             nonce: s.nonce,
             amount: s.amount,
@@ -778,14 +823,14 @@ const oe = () => {
     }, b = async (s) => {
       if (t.innerHTML = "", t.setAttribute("disabled", "disabled"), s === "new") {
         const u = n.value.replace(/\s/g, "").substring(0, 6);
-        u !== null && u.length === 6 && w({
+        u !== null && u.length === 6 && V({
           type: "card_bin",
           nonce: a,
           amount: i,
           cardBin: u
         });
       } else
-        w({
+        V({
           type: "payment_token",
           nonce: a,
           amount: i,
@@ -811,7 +856,7 @@ const oe = () => {
     e instanceof Error ? A(e.message) : A("Unknown error");
   }
 };
-jQuery(document.body).on("updated_checkout", oe);
+jQuery(document.body).on("updated_checkout", se);
 jQuery(document).ready(() => {
-  jQuery(document.body).hasClass("woocommerce-order-pay") && oe();
+  jQuery(document.body).hasClass("woocommerce-order-pay") && se();
 });
